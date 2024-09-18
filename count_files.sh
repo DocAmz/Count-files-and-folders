@@ -9,7 +9,7 @@ HIDE_CURSOR='\033[?25l'
 SHOW_CURSOR='\033[?25h'
 
 # Version of the script
-VERSION="1.3.0"
+VERSION="1.4.0"
 
 # Function to print usage
 print_usage() {
@@ -107,10 +107,6 @@ count_files_and_folders() {
     # Print a new line after the progress bar is complete
     printf "\r\033[K\n"
 
-    # Print total counts
-    echo -e "${GREEN}Total files: ${file_count}${NC}"
-    echo -e "${GREEN}Total folders: ${folder_count}${NC}"
-
     # Print all subfolders with file and folder counts if the option is set
     if [ "$display_subfolders" -eq 1 ]; then
         echo -e "${GREEN}Subfolders:${NC}"
@@ -131,6 +127,13 @@ count_files_and_folders() {
             printf "%-50s %-10d %-10d\n" "$folder" "$num_files" "$num_folders"
         done < "$subfolder_list"
     fi
+
+    # Print a new line after all subfolders is complete
+    printf "\r\033[K\n"
+
+    # Print total counts
+    echo -e "${GREEN}Total files: ${file_count}${NC}"
+    echo -e "${GREEN}Total folders: ${folder_count}${NC}"
 
     # Clean up temporary file
     rm "$subfolder_list"
